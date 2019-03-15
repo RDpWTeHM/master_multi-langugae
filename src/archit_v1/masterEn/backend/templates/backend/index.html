@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Backend Index|Master En</title>
+</head>
+<body>
+	<h1>This Is back-end</h1>
+
+	<h2>Dynamic content</h2>
+
+	<p>The library has the following record counts:</p>
+
+
+	<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+
+	<div id='logout_btn'>
+		<button onclick="{location.href='{% url 'logout' %}'}">Logout</button>
+	</div>
+</body>
+</html>
