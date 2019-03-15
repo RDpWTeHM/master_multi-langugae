@@ -32,18 +32,29 @@
 
 		{% csrf_token %}
 	</form>
-<script type="text/javascript">
-	function translate_that(){
-		console.log("heheda");
-		$("#result").text("苹果");
-		return false;
-	}
-</script>
-
 
 	<br/><br/>
 	<div id='logout_btn'>
 		<button onclick="{location.href='{% url 'logout' %}'}">Logout</button>
 	</div>
+
+<script type="text/javascript">
+	function translate_that(){
+		console.log("heheda");
+		txt = $("#translate").val();
+		token = $("input[name='csrfmiddlewaretoken']").val();
+		$.post("{% url 'backend:translate' %}",
+				{
+					"translate": txt,
+					"csrfmiddlewaretoken": token,
+				},
+				function show_result(data, status){
+					$("#result").text(txt + ": " + data.ret);
+				},
+				"json");
+		return false;
+	}
+</script>
+
 </body>
 </html>
