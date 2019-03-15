@@ -9,6 +9,8 @@ from django.shortcuts import Http404
 from django.http.response import JsonResponse
 # import json
 
+from masterencore.fanyiapi import baidu as fanyiapi
+
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -29,7 +31,9 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def translate(request):
     if request.method == "POST":
-        print(request.POST["translate"], file=sys.stderr)
-        return JsonResponse({'ret': '苹果'})
+        # print(request.POST["translate"], file=sys.stderr)
+        word = request.POST['translate']
+        api_resp = fanyiapi.fanyi(word)
+        return JsonResponse({'ret': api_resp['trans_result'][0]['dst']})
     else:
         raise Http404("wrong request method.")
