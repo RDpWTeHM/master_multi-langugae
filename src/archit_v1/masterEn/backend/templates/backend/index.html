@@ -1,5 +1,7 @@
 <html>
 <head>
+{# <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script> #}
+<script type="text/javascript" src="/static/js/jquery-3.3.1.main.js"></script>
 	<title>Backend Index|Master En</title>
 </head>
 <body>
@@ -12,6 +14,34 @@
 
 	<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
 
+
+
+	<br/>
+	<h2>Translate</h2>
+	{# <form id="transform" name="transform" action="{% url backend:'translate' %}" method="POST"> #}
+	<form id="transform" name="transform" action="" method="POST">
+		<div id="enter">
+			<label>翻译：</label>
+			<input id="translate" name="translate"/>
+			<button type="button" id="btnTranslate" name="btnTranslate" onclick="translate_that();">翻译</button>
+		</div>
+
+		<div id="display_result">
+			<p id="result" name="result"></p>
+		</div>
+
+		{% csrf_token %}
+	</form>
+<script type="text/javascript">
+	function translate_that(){
+		console.log("heheda");
+		$("#result").text("苹果");
+		return false;
+	}
+</script>
+
+
+	<br/><br/>
 	<div id='logout_btn'>
 		<button onclick="{location.href='{% url 'logout' %}'}">Logout</button>
 	</div>
