@@ -1,6 +1,8 @@
 # baidu.py
+"""
+"""
 
-
+import sys
 import hashlib
 import random
 
