@@ -19,11 +19,13 @@ from django.http import HttpResponse
 
 from django.views.generic.base import RedirectView
 
+from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', lambda request: HttpResponse('<h1>Welcome to Master English!</h1>')),
+    path('', views.home, name='home'),
 
     path(r'favicon.ico',
          RedirectView.as_view(url=r'/static/favicon.ico')),
