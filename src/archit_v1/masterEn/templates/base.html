@@ -37,6 +37,19 @@
 			<li class="nav-item">
 				<a class="nav-link disabled" href="#">Disabled</a>
 			</li>
+
+			{# real application of my site support here: #}
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+	           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Application
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	          <a class="dropdown-item" href="{% url 'backend:index' %}">Master English</a>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
+	      </li>
 		</ul>
 	</div>
 </nav>
