@@ -1,9 +1,19 @@
-<html>
-    <head>
-        <title>Master En|logout</title>
-    </head>
-    <body>
-        <p>Logged out!</p>  
-  		<a href="{% url 'login'%}">Click here to login again.</a>
-    </body>
-</html>
+{# templates/registration/logged_out.html #}
+{% extends "base.html" %}
+
+{% block title %}Master En|logout{% endblock %}
+
+{% block body-id %}loggedoutpage{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+    	<div class="col">
+        	<h1>Logged out!</h1>
+
+  			<a href="{% url 'login'%}">Click here to login again.</a>
+  		</div>
+  	</div>
+</div>
+
+{% endblock %}

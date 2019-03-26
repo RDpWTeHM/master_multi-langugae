@@ -1,39 +1,64 @@
-<html>
-<head>
-{# <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script> #}
-<script type="text/javascript" src="/static/js/jquery-3.3.1.main.js"></script>
-	<title>Backend Index|Master En</title>
-</head>
-<body>
-	<h1>This Is back-end</h1>
+{# backend/templates/backend/index.html #}
+{% extends "base.html" %}
 
-	<h2>Dynamic content</h2>
+{% block title %}Index|MasterEn{% endblock %}
 
-	<p>The backend has the following record counts:</p>
-	<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+{% block body-id %}masteren_app_indexpage{% endblock %}
 
+{% block content %}
+<div class="container">
+    <div class="row">
+    	<div class="col">
+			<h1>This Is back-end</h1>
 
-	<br/>
-	<h2>Translate</h2>
-	{# <form id="transform" name="transform" action="{% url backend:'translate' %}" method="POST"> #}
-	<form id="transform" name="transform" action="" method="POST">
-		<div id="enter">
-			<label>翻译：</label>
-			<input id="translate" name="translate"/>
-			<button type="button" id="btnTranslate" name="btnTranslate" onclick="translate_that();">翻译</button>
+			<h2>Dynamic content</h2>
+
+			<p>The backend has the following record counts:</p>
+			<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
 		</div>
+	</div>
 
-		<div id="display_result">
-			<p id="result" name="result"></p>
+	<div class="row">
+	{# <form id="transform" name="transform" action="{% url backend:'translate' %}" method="POST"> #}
+	<form id="transform" name="transform" action="" method="POST"
+	      class="form-contact col" role="form">
+		<h2>Translate</h2>
+
+	    <div class="form-group">
+			<div id="enter">
+				<label >翻译：</label>
+				<input id="translate" name="translate" class="form-control" />
+					<button type="button" id="btnTranslate" name="btnTranslate"
+							onclick="translate_that();"
+					    	{# class="btn btn-sm btn-primary btn-block"> #}
+							class="btn btn-primary">
+						翻译</button>
+			</div>
 		</div>
 
 		{% csrf_token %}
 	</form>
-
-	<br/><br/>
-	<div id='logout_btn'>
-		<button onclick="{location.href='{% url 'logout' %}'}">Logout</button>
 	</div>
+
+	<div class="row">
+		<div class="col">
+			<div id="display_result">
+				<p id="result" name="result"></p>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+	<div class="row">
+		<div class="col">
+			<div id='logout_btn'>
+				<button onclick="{location.href='{% url 'logout' %}'}"
+						class="btn btn-link">
+					Logout</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	function translate_that(){
@@ -52,6 +77,4 @@
 		return false;
 	}
 </script>
-
-</body>
-</html>
+{% endblock %}
