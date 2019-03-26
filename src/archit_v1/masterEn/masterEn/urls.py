@@ -25,10 +25,11 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', views.home, name='home'),
-
     path(r'favicon.ico',
          RedirectView.as_view(url=r'/static/favicon.ico')),
+
+    path('', views.home, name='home'),
+    path('contact/', views.contact, name="contact"),
 
     path('backend/', include('backend.urls')),
 ]
