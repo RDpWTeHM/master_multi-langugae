@@ -6,48 +6,56 @@
 {% block body-id %}masteren_app_indexpage{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-    	<div class="col">
+
+
+<div class="jumbotron">
+    <div class="container">
 			<h1>This Is back-end</h1>
 
 			<h2>Dynamic content</h2>
 
 			<p>The backend has the following record counts:</p>
 			<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
-		</div>
 	</div>
+</div>
 
+<div class="container">
 	<div class="row">
-	{# <form id="transform" name="transform" action="{% url backend:'translate' %}" method="POST"> #}
-	<form id="transform" name="transform" action="" method="POST"
-	      class="form-contact col" role="form">
-		<h2>Translate</h2>
+		{# left, main area #}
+		<div class="col-md-8">
+			<form id="transform" name="transform" action="" method="POST"
+			      class="form-contact" role="form">
+				<h2>Translate</h2>
 
-	    <div class="form-group">
-			<div id="enter">
-				<label >翻译：</label>
-				{# TODO: fobbiden Enter press to post(refresh) #}
-				<input id="translate" name="translate" class="form-control" />
-					<button type="button" id="btnTranslate" name="btnTranslate"
-							onclick="translate_that();"
-					    	{# class="btn btn-sm btn-primary btn-block"> #}
-							class="btn btn-primary">
-						翻译</button>
-			</div>
-		</div>
+			    <div class="form-group">
+					<div id="enter">
+						<label >翻译：</label>
+						{# TODO: fobbiden Enter press to post(refresh) #}
+						<input id="translate" name="translate" class="form-control" />
+							<button type="button" id="btnTranslate" name="btnTranslate"
+									onclick="translate_that();"
+							    	{# class="btn btn-sm btn-primary btn-block"> #}
+									class="btn btn-primary">
+								翻译</button>
+					</div>
+				</div>
 
-		{% csrf_token %}
-	</form>
-	</div>
+				{% csrf_token %}
+			</form>
 
-	<div class="row">
-		<div class="col">
 			<div id="display_result">
 				<p id="result" name="result"></p>
 			</div>
 		</div>
+
+
+		{# right-side, recommender #}
+		<div class="col-md-4">
+			<h2>Recently</h2>
+			<p>{% lorem %}</p>
+		</div>
 	</div>
+
 
 	<hr>
 	<div class="row">
