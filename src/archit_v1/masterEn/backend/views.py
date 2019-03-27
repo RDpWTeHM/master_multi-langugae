@@ -11,6 +11,8 @@ from django.http.response import JsonResponse
 
 from masterencore.fanyiapi import baidu as fanyiapi
 
+from .models import Dict
+
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -31,9 +33,28 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def translate(request):
     if request.method == "POST":
-        # print(request.POST["translate"], file=sys.stderr)
+        # search current database:
+        '''TODO:
+            - should Case-insensitive
+            - participle ?
+        '''
         word = request.POST['translate']
-        api_resp = fanyiapi.fanyi(word)
-        return JsonResponse({'ret': api_resp['trans_result'][0]['dst']})
+        # print(request.POST["translate"], file=sys.stderr)
+        result = None
+        try:
+            obj = Dict.objects.get(word=word)
+            result = obj.result
+
+            obj.times += 1
+            obj.save()
+        except Dict.DoesNotExist:  # new query
+            # third-part API
+            api_resp = fanyiapi.fanyi(word)
+            result = api_resp['trans_result'][0]['dst']
+
+            Dict.objects.create(word=word, result=result, times=1)
+
+        # response
+        return JsonResponse({'ret': result})
     else:
         raise Http404("wrong request method.")
