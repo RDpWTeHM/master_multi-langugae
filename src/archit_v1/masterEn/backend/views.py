@@ -1,6 +1,11 @@
-from django.shortcuts import render
+# backend/views.py
+"""
 
-# Create your views here.
+TODO:
+  - move recently/mostly 5 translations to a single backend.
+"""
+
+from django.shortcuts import render
 
 import sys
 from django.contrib.auth.decorators import login_required
