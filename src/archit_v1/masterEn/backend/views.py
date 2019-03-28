@@ -22,8 +22,12 @@ def index(request):
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
 
+    # TODO: currently, recently 5 translates; update to mostly 5 translate.
+    dicts = Dict.objects.all()
+
     context = {
         'num_visits': num_visits,
+        'most5trans': dicts[len(dicts) - 5:],
     }
 
     # Render the HTML template index.html with the data in the context variable.
