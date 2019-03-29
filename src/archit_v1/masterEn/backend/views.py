@@ -18,6 +18,8 @@ from masterencore.fanyiapi import baidu as fanyiapi
 
 from .models import Dict
 
+from .utils import get_recently_trans_orm, get_mostly_trans_orm
+
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -28,11 +30,13 @@ def index(request):
     request.session['num_visits'] = num_visits + 1
 
     # TODO: currently, recently 5 translates; update to mostly 5 translate.
-    dicts = Dict.objects.all()
+    recently5ORMDict = get_recently_trans_orm(5)
+    most5ORMDict = get_mostly_trans_orm(5)
 
     context = {
         'num_visits': num_visits,
-        'most5trans': dicts[len(dicts) - 5:],
+        'recently5trans': recently5ORMDict,
+        'most5trans': most5ORMDict,
     }
 
     # Render the HTML template index.html with the data in the context variable.

@@ -52,6 +52,20 @@
 		{# right-side, recommender #}
 		<div class="col-md-4">
 			<h2>Recently</h2>
+
+			<table id="recently_trans" class="table">
+				<tbody>
+				{% for eachTrans in recently5trans %}
+					<tr>
+						<td>{{ eachTrans.word }}:</td>
+						<td>{{ eachTrans.result }}</td>
+						<td>{{ eachTrans.times }} times</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+
+			<h2>Mostly</h2>
 			<table id="most_trans" class="table">
 				<tbody>
 				{% for eachTrans in most5trans %}
