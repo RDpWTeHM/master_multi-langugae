@@ -13,9 +13,11 @@ def get_recently_trans_orm(num):
          Not only the 'view'
     '''
     dicts = Dict.objects.all()
-    return dicts[len(dicts) - num:]
+    result = dicts[len(dicts) - num:]
+    result.reverse()
+    return result
 
 
 def get_mostly_trans_orm(num):
     dicts = Dict.objects.all().order_by('times')
-    return dicts.reverse()[:5]
+    return dicts.reverse()[:num]

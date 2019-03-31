@@ -2,7 +2,7 @@
 """
 
 TODO:
-  - move recently/mostly 5 translations to a single backend.
+  -[x] done: move recently/mostly 5 translations to a single backend.
 """
 
 from django.shortcuts import render
@@ -10,6 +10,7 @@ from django.shortcuts import render
 import sys
 from django.contrib.auth.decorators import login_required
 
+# from django.http.response import HttpResponse
 from django.shortcuts import Http404
 from django.http.response import JsonResponse
 # import json
@@ -29,18 +30,32 @@ def index(request):
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
 
-    # TODO: currently, recently 5 translates; update to mostly 5 translate.
-    recently5ORMDict = get_recently_trans_orm(5)
-    most5ORMDict = get_mostly_trans_orm(5)
+    return render(request, 'backend/index.html',
+                  context={'num_visits': num_visits, })
 
-    context = {
-        'num_visits': num_visits,
-        'recently5trans': recently5ORMDict,
-        'most5trans': most5ORMDict,
-    }
 
-    # Render the HTML template index.html with the data in the context variable.
-    return render(request, 'backend/index.html', context=context)
+@login_required(login_url='/accounts/login/')
+def recommender(request):
+    whatly = request.GET.get('whatly')
+    if whatly:
+        # exec('func = get_' + whatly + '_trans_orm') work too
+        func = eval("get_" + whatly + "_trans_orm")
+        qs = func(5)
+        return JsonResponse({
+            whatly: [{k: str(v) for k, v in obj.__dict__.items()}
+                     for obj in qs],
+        })
+
+    else:
+        recently5ORMDict = get_recently_trans_orm(5)
+        mostly5ORMDict = get_mostly_trans_orm(5)
+        mostly = [{k: str(v) for k, v in obj.__dict__.items()}
+                  for obj in mostly5ORMDict]
+        recently = [{k: str(v) for k, v in obj.__dict__.items()}
+                    for obj in recently5ORMDict]
+        return JsonResponse({
+            'recently': recently,
+            'mostly': mostly})
 
 
 @login_required(login_url='/accounts/login/')
@@ -70,4 +85,5 @@ def translate(request):
         # response
         return JsonResponse({'ret': result})
     else:
+        # TODO: upate 40x by HTTP spec
         raise Http404("wrong request method.")
