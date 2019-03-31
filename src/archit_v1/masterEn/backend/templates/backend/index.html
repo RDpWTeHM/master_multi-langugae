@@ -19,6 +19,10 @@
 	</div>
 </div>
 
+{# TODO: #}
+{#   - add chinese to english #}
+{#   -[x] after click translate, update recently and mostly #}
+
 <div class="container">
 	<div class="row">
 		{# left, main area #}
@@ -89,6 +93,9 @@
 				},
 				function show_result(data, status){
 					$("#result").text(txt + ": " + data.ret);
+
+					load_mostly_translation_words();
+					load_recently_translation_words();
 				},
 				"json");
 		return false;
@@ -106,7 +113,7 @@
 			  		_str += "<td>" + data.mostly[i].times + " times" + "</td></tr>";
 			  	}
 			  	_str += "</tbody>";
-			  	$("#mostly_trans").append(_str);
+			  	$("#mostly_trans").html(_str);
 			  });
 	}
 
@@ -121,7 +128,7 @@
 			  		_str += "<td>" + data.recently[i].times + " times" + "</td></tr>";
 			  	}
 			  	_str += "</tbody>";
-			  	$("#recently_trans").append(_str);
+			  	$("#recently_trans").html(_str);
 			  });
 	}
 
