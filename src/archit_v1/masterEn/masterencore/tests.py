@@ -30,6 +30,17 @@ class TestBaiduFanyiAPI(unittest.TestCase):
         self.assertEqual(cn_from_api, cn_for_check,
                          "'apple' --to--> '苹果' failure!!!")
 
+    def test_CN_to_EN_functional(self):
+        cn = '香蕉'
+        en_for_check = 'banana'
+        en_from_api = None
+
+        api_resp = self.translapi.enwrite(cn)
+        en_from_api = api_resp['trans_result'][0]['dst']
+
+        self.assertEqual(en_from_api.lower(), en_for_check.lower(),
+                         "'香蕉' --to--> 'banana' failure!!!")
+
 
 if __name__ == '__main__':
     unittest.main()

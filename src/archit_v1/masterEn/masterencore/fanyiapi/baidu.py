@@ -49,3 +49,18 @@ def fanyi(word):
         raise
     else:
         return json.loads(r.text)
+
+
+def enwrite(hans):
+    url = gen_rest_url(hans, 'zh', 'en')
+    try:
+        r = requests.get(url, timeout=3)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding
+
+    except ConnectionError:
+        raise
+    except Exception:
+        raise
+    else:
+        return json.loads(r.text)
