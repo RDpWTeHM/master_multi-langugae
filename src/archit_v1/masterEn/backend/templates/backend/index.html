@@ -20,8 +20,9 @@
 </div>
 
 {# TODO: #}
-{#   - add chinese to english #}
+{#   -[o] add chinese to english #}
 {#   -[x] after click translate, update recently and mostly #}
+{#   -[o] fobbiden Enter press to post(refresh) #}
 
 <div class="container">
 	<div class="row">
@@ -34,13 +35,18 @@
 			    <div class="form-group">
 					<div id="enter">
 						<label >翻译：</label>
-						{# TODO: fobbiden Enter press to post(refresh) #}
 						<input id="translate" name="translate" class="form-control" />
-							<button type="button" id="btnTranslate" name="btnTranslate"
-									onclick="translate_that();"
+							<button type="button" id="btnEn2Zh" name="btnEn2Zh"
+									onclick="translate_that(this);"
 							    	{# class="btn btn-sm btn-primary btn-block"> #}
 									class="btn btn-primary">
-								翻译</button>
+								英译中</button>
+
+                            <button type="button" id="btnZh2En" name="btnZh2En"
+                                    onclick="translate_that(this);"
+                                    {# class="btn btn-sm btn-primary btn-block"> #}
+                                    class="btn btn-primary">
+                                中译英</button>
 					</div>
 				</div>
 
@@ -82,14 +88,25 @@
 </div>
 
 <script type="text/javascript">
-	function translate_that(){
-		console.log("heheda");
+	function translate_that(obj){
+        // whichId = obj.attr("id"); // not jquery, but document
+        var whichId = obj.id;
+        if (whichId == "btnEn2Zh"){
+            url = "{% url 'backend:translate' %}";
+            var whichDirection = "En2Zh";
+        }else if (whichId == "btnZh2En"){
+            url = "{% url 'backend:translate' %}";
+            var whichDirection = "Zh2En";
+        }
+
+
 		txt = $("#translate").val();
 		token = $("input[name='csrfmiddlewaretoken']").val();
-		$.post("{% url 'backend:translate' %}",
+		$.post(url,
 				{
 					"translate": txt,
 					"csrfmiddlewaretoken": token,
+                    "whichDirection": whichDirection,
 				},
 				function show_result(data, status){
 					$("#result").text(txt + ": " + data.ret);

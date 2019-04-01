@@ -63,24 +63,32 @@ def translate(request):
     if request.method == "POST":
         # search current database:
         '''TODO:
-            - should Case-insensitive
-            - participle ?
+            -[o] should Case-insensitive
+            -[o] blank begin/end strip
+            -[o] participle ?
         '''
+        whichDirection = request.POST.get("whichDirection")
         word = request.POST['translate']
         # print(request.POST["translate"], file=sys.stderr)
         result = None
-        try:
-            obj = Dict.objects.get(word=word)
-            result = obj.result
 
-            obj.times += 1
-            obj.save()
-        except Dict.DoesNotExist:  # new query
-            # third-part API
-            api_resp = fanyiapi.fanyi(word)
+        if whichDirection == "En2Zh":
+            try:
+                obj = Dict.objects.get(word=word)
+                result = obj.result
+
+                obj.times += 1
+                obj.save()
+            except Dict.DoesNotExist:  # new query
+                # third-part API
+                api_resp = fanyiapi.fanyi(word)
+                result = api_resp['trans_result'][0]['dst']
+
+                Dict.objects.create(word=word, result=result, times=1)
+
+        elif whichDirection == "Zh2En":
+            api_resp = fanyiapi.enwrite(word)
             result = api_resp['trans_result'][0]['dst']
-
-            Dict.objects.create(word=word, result=result, times=1)
 
         # response
         return JsonResponse({'ret': result})
