@@ -28,25 +28,31 @@
 	<div class="row">
 		{# left, main area #}
 		<div class="col-md-8">
-			<form id="transform" name="transform" action="" method="POST"
+			<form id="transform" name="transform"
+				  action="" method="POST"
 			      class="form-contact" role="form">
 				<h2>Translate</h2>
 
 			    <div class="form-group">
 					<div id="enter">
 						<label >翻译：</label>
-						<input id="translate" name="translate" class="form-control" />
-							<button type="button" id="btnEn2Zh" name="btnEn2Zh"
-									onclick="translate_that(this);"
-							    	{# class="btn btn-sm btn-primary btn-block"> #}
-									class="btn btn-primary">
-								英译中</button>
+						<div class="input-group">
+							<input id="translate" name="translate"
+								   class="form-control" />
+							<span class='input-group-btn'>
+								<button type="button" id="btnEn2Zh" name="btnEn2Zh"
+										onclick="translate_that(this);"
+								    	{# class="btn btn-sm btn-primary btn-block"> #}
+										class="btn btn-primary">
+									英译中</button>
 
-                            <button type="button" id="btnZh2En" name="btnZh2En"
-                                    onclick="translate_that(this);"
-                                    {# class="btn btn-sm btn-primary btn-block"> #}
-                                    class="btn btn-primary">
-                                中译英</button>
+	                            <button type="button" id="btnZh2En" name="btnZh2En"
+	                                    onclick="translate_that(this);"
+	                                    {# class="btn btn-sm btn-primary btn-block"> #}
+	                                    class="btn btn-primary">
+	                                中译英</button>
+                           </span>
+                    	</div>
 					</div>
 				</div>
 
@@ -155,7 +161,9 @@ function onload(){
 	load_recently_translation_words();
 }
 
-onload();
+$(document).ready(function(){
+	onload();
+});
 
 </script>
 {% endblock %}
